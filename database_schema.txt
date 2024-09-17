@@ -1,0 +1,21 @@
+# Create table for storing room details
+CREATE TABLE rooms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    number VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    UNIQUE (number)
+);
+
+# Create table for storing reservations
+CREATE TABLE reservations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    FOREIGN KEY (room_id) REFERENCES rooms(id)
+);
+
+# Atomic values, unique name for each column, no repeating
+# All non-key attributes are fully functional dependent on the primary key.
+# There are no transitive dependencies, where non-key attributes depend on other non-key attributes.

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Hotel Management System</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('add_room') }}">Add Room</a></li>
+            <li><a href="{{ url_for('make_reservation') }}">Make a Reservation</a></li>
+            <li><a href="{{ url_for('get_rooms') }}">View Rooms</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
