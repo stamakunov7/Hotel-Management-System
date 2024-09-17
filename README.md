@@ -1,0 +1,2 @@
+# Hotel Management System
+ This Hotel Management Application is a web-based platform that enables users to manage rooms and reservations for a hotel. It is built using Flask as the web framework and MySQL as the database for storing and retrieving data related to rooms and reservations. The program includes functionalities for adding new rooms, making reservations, and viewing room details, along with any associated reservations.
