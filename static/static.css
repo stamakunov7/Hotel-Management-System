@@ -117,3 +117,23 @@ label {
     text-align: center;
 }
 
+ul.flashes {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.flashes li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

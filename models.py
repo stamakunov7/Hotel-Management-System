@@ -32,25 +32,42 @@ def make_reservation(room_number, start_date, end_date):
         try:
             cursor = conn.cursor()
             # Select the room ID based on the provided room number
-            cursor.execute("SELECT id FROM rooms WHERE number = %s", (room_number,)) # '%s' is a placeholder for the room number we want to insert into the query
+            cursor.execute("SELECT id FROM rooms WHERE number = %s", (room_number,))
             room_result = cursor.fetchone()
 
-            if room_result: # if the room is found in the database then perform the following actions
+            if room_result:
                 room_id = room_result[0]
-                # Insert the new reservation with the fetched room ID
-                insert_query = """
-                INSERT INTO reservations (room_id, start_date, end_date) 
-                VALUES (%s, %s, %s)
-                """
-                cursor.execute(insert_query, (room_id, start_date, end_date))
-                conn.commit()
+                # Check if the room is available
+                cursor.execute("""
+                SELECT COUNT(*) FROM reservations
+                WHERE room_id = %s AND (
+                    (start_date BETWEEN %s AND %s) OR 
+                    (end_date BETWEEN %s AND %s) OR
+                    (%s BETWEEN start_date AND end_date) OR
+                    (%s BETWEEN start_date AND end_date)
+                )
+                """, (room_id, start_date, end_date, start_date, end_date, start_date, end_date))
+                
+                availability_count = cursor.fetchone()[0]
+                if availability_count == 0:
+                    # Room is available, proceed to insert the reservation
+                    insert_query = """
+                    INSERT INTO reservations (room_id, start_date, end_date) 
+                    VALUES (%s, %s, %s)
+                    """
+                    cursor.execute(insert_query, (room_id, start_date, end_date))
+                    conn.commit()
+                    return True, "Reservation successfully made."
+                else:
+                    return False, "The room is not available for the selected dates."
             else:
-                print("No room with that number exists.") # I tried to print this message if the room is not found, but it doesn't work. It just will take me to the index page without any message
+                return False, "No room with that number exists."
         except Error as e:
-            print(f"Error: '{e}'") # And this is just a general error message
+            return False, f"Error: {str(e)}"
         finally:
             cursor.close()
             conn.close()
+    return False, "Could not connect to the database."
 
 # Get all rooms from the database
 def get_all_rooms():

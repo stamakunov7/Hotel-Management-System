@@ -1,8 +1,8 @@
-from flask import Flask, render_template, g, request, redirect, url_for
+from flask import Flask, render_template, g, request, redirect, url_for, flash
 import models
 
 app = Flask(__name__)
-app.secret = 'secret'
+app.secret_key = 'secret'
 
 @app.route('/')
 def index():
@@ -28,8 +28,16 @@ def make_reservation():
         room_number = request.form['number']  
         start_date = request.form['start_date']
         end_date = request.form['end_date']
-        models.make_reservation(room_number, start_date, end_date)
-        return redirect(url_for('index'))
+
+        success, message = models.make_reservation(room_number, start_date, end_date)
+        
+        if success:
+            flash(message, 'success') # Flash success message
+        else:
+            flash(message, 'error') # Flash error message
+        
+        return redirect(url_for('make_reservation'))
+    
     rooms = models.get_all_rooms()
     return render_template('make_reservation.html', rooms=rooms)
 
@@ -46,5 +54,6 @@ def get_rooms():
 # Run the app
 if __name__ == '__main__':
     app.run(debug=True)
+
+
     
-        
