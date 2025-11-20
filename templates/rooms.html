@@ -3,18 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room List</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Room List - Hotel Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
 </head>
 <body>
-    <h1>Room List</h1>
-    <ul>
-        {% for room in rooms %}
-            <li>
-                Room Number: {{ room.number }} - Type: {{ room.type }} - Status: {{ room.status }}<br>
-                Reservation Dates: {% if room.start_date %}{{ room.start_date }} to {{ room.end_date }}{% else %}No reservations{% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>🏠 Room List</h1>
+        
+        {% if rooms %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Reservation Start</th>
+                    <th>Reservation End</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td><strong>{{ room.number }}</strong></td>
+                    <td>{{ room.type }}</td>
+                    <td>
+                        <span class="status-badge status-{{ room.status }}">
+                            {{ room.status }}
+                        </span>
+                    </td>
+                    <td>{{ room.start_date if room.start_date else 'No reservation' }}</td>
+                    <td>{{ room.end_date if room.end_date else 'No reservation' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 15px; margin: 20px 0;">
+            <p style="font-size: 18px; color: #666;">No rooms found in the database.</p>
+        </div>
+        {% endif %}
+        
+        <a href="{{ url_for('index') }}" class="back-link">← Back to Home</a>
+    </div>
 </body>
 </html>

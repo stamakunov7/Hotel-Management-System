@@ -1,139 +1,351 @@
-/* Reset some default styles */
-body, h1, form, table {
+/* Modern CSS Reset */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-/* Apply a base font to the body element */
+/* Base Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     padding: 20px;
-    background-color: #f4f4f4;
-}
-
-/* Style the main heading */
-h1 {
     color: #333;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    margin-top: 20px;
+}
+
+/* Header Styles */
+h1 {
+    color: #667eea;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Style the table */
-table {
-    width: 100%;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-}
-
-/* Style the table headers and cells */
-th, td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
-}
-
-/* Style the table head background */
-thead tr {
-    background-color: #e9e9e9;
-}
-
-/* Style the form elements */
-form {
-    max-width: 400px;
-    margin: 0 auto 20px;
+/* Navigation */
+nav {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
     padding: 20px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Style the form input elements */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Styles */
+form {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
 input[type="text"],
+input[type="number"],
 input[type="date"],
+select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
 input[type="submit"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Modify the submit button to stand out */
-input[type="submit"] {
-    background-color: #5cb85c;
+    padding: 15px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 input[type="submit"]:hover {
-    background-color: #4cae4c;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
 }
 
-/* Add some margin to labels for better readability */
-label {
-    margin-top: 10px;
-    display: block;
+input[type="submit"]:active {
+    transform: translateY(0);
 }
 
-/* Responsive table */
-@media screen and (max-width: 600px) {
-    table {
-        width: 100%;
-        display: block;
-        overflow: auto;
-    }
-
-    thead {
-        display: none; /* Hide the table headers on small screens */
-    }
-
-    tr {
-        display: block;
-        margin-bottom: .625em;
-    }
-
-    td {
-        display: block;
-        text-align: right;
-        padding-left: 50%;
-        text-align: right;
-        position: relative;
-    }
-
-    td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 50%;
-        padding-left: 15px;
-        font-weight: bold;
-        text-align: left;
-    }
+/* Table Styles */
+table {
+    width: 100%;
+    margin: 30px 0;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Quick utility class for centering content */
-.center {
-    text-align: center;
+thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
 }
 
+th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr {
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: #f8f9fa;
+    transform: scale(1.01);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Flash Messages */
 ul.flashes {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    margin-bottom: 20px;
 }
 
 ul.flashes li {
-    padding: 10px;
+    padding: 15px 20px;
     margin-bottom: 10px;
-    border-radius: 4px;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .success {
-    background-color: #d4edda;
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
     color: #155724;
+    border-left: 4px solid #28a745;
 }
 
 .error {
-    background-color: #f8d7da;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
     color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+/* Room List Styles */
+ul:not(.flashes) {
+    list-style: none;
+    padding: 0;
+}
+
+ul:not(.flashes) li {
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+ul:not(.flashes) li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-available {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-reserved {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-occupied {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-maintenance {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* Delete Button */
+form[style*="display: inline-block"] {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-block !important;
+}
+
+.delete-btn {
+    background: transparent;
+    color: #999;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.delete-btn:hover {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.delete-btn:active {
+    color: #ee5a6f;
+    background: rgba(255, 107, 107, 0.2);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li a {
+        display: block;
+        text-align: center;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px 5px;
+    }
+}
+
+/* Back Link */
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: #764ba2;
+    transform: translateX(-5px);
 }

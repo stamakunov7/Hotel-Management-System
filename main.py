@@ -16,9 +16,16 @@ def add_room():
         status = request.form['status']
         connection = models.create_connection()
         if connection is not None: # if connection is not None, then add room. If is None, then return to index page
-            models.add_room(connection, number, room_type, status)
-            connection.close()
-        return redirect(url_for('index'))
+            try:
+                models.add_room(connection, number, room_type, status)
+                flash('Room added successfully!', 'success')
+            except Exception as e:
+                flash(f'Error adding room: {str(e)}', 'error')
+            finally:
+                connection.close()
+        else:
+            flash('Error: Could not connect to database. Please make sure MySQL is running.', 'error')
+        return redirect(url_for('add_room'))
     return render_template('add_room.html')
 
 # Requests data from the web page and sends it to the server
@@ -51,9 +58,19 @@ def get_rooms():
         connection.close()
     return render_template('rooms.html', rooms=rooms)
 
+# Delete a room
+@app.route('/delete_room/<room_number>', methods=['POST'])
+def delete_room(room_number):
+    success, message = models.delete_room(room_number)
+    if success:
+        flash(message, 'success')
+    else:
+        flash(message, 'error')
+    return redirect(url_for('make_reservation'))
+
 # Run the app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
 
 
     

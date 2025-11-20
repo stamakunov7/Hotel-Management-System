@@ -3,57 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Make Reservation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Make Reservation - Hotel Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
 </head>
 <body>
-    <h1>Make Reservation</h1>
+    <div class="container">
+        <h1>📅 Make a Reservation</h1>
 
-    <!-- Display flash messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Room Number</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Reservation Start Date</th>
-                <th>Reservation End Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for room in rooms %}
-            <tr>
-                <td>{{ room.number }}</td>
-                <td>{{ room.type }}</td>
-                <td>{{ room.status }}</td>
-                <td>{{ room.start_date if room.start_date else 'N/A' }}</td>
-                <td>{{ room.end_date if room.end_date else 'N/A' }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <br>
-    <form action="/make_reservation" method="post">
-        <label for="number">Room Number:</label>
-        <input type="number" id="number" name="number" required><br><br>
+        <h2 style="margin-top: 30px; margin-bottom: 15px; color: #667eea;">Available Rooms</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Reservation Start</th>
+                    <th>Reservation End</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if rooms %}
+                    {% for room in rooms %}
+                    <tr>
+                        <td><strong>{{ room.number }}</strong></td>
+                        <td>{{ room.type }}</td>
+                        <td>
+                            <span class="status-badge status-{{ room.status }}">
+                                {{ room.status }}
+                            </span>
+                        </td>
+                        <td>{{ room.start_date if room.start_date else 'Available' }}</td>
+                        <td>{{ room.end_date if room.end_date else 'Available' }}</td>
+                        <td style="padding: 5px; text-align: center;">
+                            <form action="{{ url_for('delete_room', room_number=room.number) }}" method="post" style="display: inline-block; margin: 0; padding: 0;" onsubmit="return confirm('Are you sure you want to delete room {{ room.number }}?');">
+                                <button type="submit" class="delete-btn" title="Delete room">➖</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px;">
+                            No rooms available at the moment.
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
 
-        <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date" required><br><br>
+        <h2 style="margin-top: 40px; margin-bottom: 15px; color: #667eea;">Create New Reservation</h2>
+        <form action="/make_reservation" method="post">
+            <label for="number">Room Number:</label>
+            <input type="number" id="number" name="number" required placeholder="Enter room number" min="1">
 
-        <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date" required><br><br>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
 
-        <input type="submit" value="Reserve">
-    </form>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+
+            <input type="submit" value="Reserve Room">
+        </form>
+        <a href="{{ url_for('index') }}" class="back-link">← Back to Home</a>
+    </div>
 </body>
 </html>
